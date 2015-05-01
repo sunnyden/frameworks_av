@@ -564,12 +564,14 @@ status_t CameraSource::initWithCameraAccess(
     // By default, do not store metadata in video buffers
     mIsMetaDataStoredInVideoBuffers = false;
     mCamera->storeMetaDataInBuffers(false);
+
+#ifndef NO_METADATA_IN_VIDEO_BUFFERS
     if (storeMetaDataInVideoBuffers) {
         if (OK == mCamera->storeMetaDataInBuffers(true)) {
             mIsMetaDataStoredInVideoBuffers = true;
         }
     }
-
+#endif
     int64_t glitchDurationUs = (1000000LL / mVideoFrameRate);
     if (glitchDurationUs > mGlitchDurationThresholdUs) {
         mGlitchDurationThresholdUs = glitchDurationUs;
